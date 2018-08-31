@@ -1,6 +1,8 @@
-package com.my.rabbitMQ.controller;
+package com.my.rabbit.controller;
 
-import com.my.rabbitMQ.service.RabbitSendService;
+import com.my.rabbit.service.DelayRabbitSendService;
+import com.my.rabbit.service.PriorityRabbitSendService;
+import com.my.rabbit.service.RabbitSendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,13 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class SendController {
     @Autowired
     private RabbitSendService rabbitService;
+    @Autowired
+    private PriorityRabbitSendService priorityRabbitSendService;
+    @Autowired
+    private DelayRabbitSendService delayRabbitSendService;
 
     @RequestMapping("sendFanout")
     public String sendFanout(@RequestParam("count") int count){
         for (int i=0;i<count;i++){
             rabbitService.fanoutSendMessage(i);
             try {
-                Thread.sleep(500L);
+                Thread.sleep(100L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -33,7 +39,7 @@ public class SendController {
         for (int i=0;i<count;i++){
             rabbitService.directSendMessage(i);
             try {
-                Thread.sleep(500L);
+                Thread.sleep(100L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -47,7 +53,7 @@ public class SendController {
             rabbitService.topicSendMessage2(i);
             rabbitService.topicSendMessage3(i);
             try {
-                Thread.sleep(500L);
+                Thread.sleep(100L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -62,7 +68,32 @@ public class SendController {
             rabbitService.headersSendMessage3(i);
             rabbitService.headersSendMessage4(i);
             try {
-                Thread.sleep(500L);
+                Thread.sleep(100L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return "00000000";
+    }
+
+    @RequestMapping("sendPriorityQueue")
+    public String sendPriorityQueue(@RequestParam("count") int count){
+        for (int i=0;i<count;i++){
+            priorityRabbitSendService.send(i);
+            try {
+                Thread.sleep(100L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return "00000000";
+    }
+    @RequestMapping("sendDelayQueue")
+    public String sendDelayQueue(@RequestParam("count") int count){
+        for (int i=0;i<count;i++){
+            delayRabbitSendService.send(i);
+            try {
+                Thread.sleep(100L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -1,4 +1,4 @@
-package com.my.rabbitMQ.listener;
+package com.my.rabbit.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

@@ -5,8 +5,8 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
     <!--引入运行参数-->
-    <property name="LOG_DIR" value="${log_dir}"/>
-    <property name="APP_NAME" value="${app.name}"/>
+    <property name="LOG_DIR" value="/opt/logs"/>
+    <property name="APP_NAME" value="rabbit"/>
 
     <!--定义日志文件的名称-->
     <property name="LOG_NAME" value="${LOG_DIR}/${APP_NAME}"/>

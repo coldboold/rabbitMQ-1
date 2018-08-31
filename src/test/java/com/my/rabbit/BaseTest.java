@@ -1,6 +1,6 @@
-package com.my.rabbitMQ;
+package com.my.rabbit;
 
-import com.my.rabbitMQ.service.RabbitSendService;
+import com.my.rabbit.service.RabbitSendService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.my.rabbitMQ.configuration;
+package com.my.rabbit.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

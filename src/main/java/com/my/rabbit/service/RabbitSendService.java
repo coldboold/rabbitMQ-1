@@ -1,9 +1,8 @@
-package com.my.rabbitMQ.service;
+package com.my.rabbit.service;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -31,23 +30,23 @@ public class RabbitSendService {
     private AmqpTemplate headersRabbitTemplate;
 
     public void fanoutSendMessage(int i){
-        fanoutRabbitTemplate.convertAndSend("fanoutSendMessage hello rabbitMQ===="+i);
+        fanoutRabbitTemplate.convertAndSend("fanoutSendMessage hello rabbit===="+i);
     }
 
     public void directSendMessage(int i){
-        directRabbitTemplate.convertAndSend("directSendMessage hello rabbitMQ===="+i);
+        directRabbitTemplate.convertAndSend("directSendMessage hello rabbit===="+i);
     }
 
     public void topicSendMessage(int i){
-        topicRabbitTemplate.convertAndSend("topic.routing.a","topicSendMessage hello rabbitMQ===="+i);
+        topicRabbitTemplate.convertAndSend("topic.routing.a","topicSendMessage hello rabbit===="+i);
     }
 
     public void topicSendMessage2(int i){
-        topicRabbitTemplate.convertAndSend("topic.routing.a","topicSendMessage2 hello rabbitMQ===="+i);
+        topicRabbitTemplate.convertAndSend("topic.routing.a","topicSendMessage2 hello rabbit===="+i);
     }
     public void topicSendMessage3(int i){
         //不会被消费掉，因为找不到匹配的Queue
-        topicRabbitTemplate.convertAndSend("topic.routing.a.x","topicSendMessage3 hello rabbitMQ===="+i);
+        topicRabbitTemplate.convertAndSend("topic.routing.a.x","topicSendMessage3 hello rabbit===="+i);
     }
 
     /**
@@ -57,7 +56,7 @@ public class RabbitSendService {
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setHeader("headers.key","123");
         messageProperties.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN);
-        String messageStr = "headersMessage hello rabbitMQ "+i;
+        String messageStr = "headersMessage hello rabbit "+i;
         Message message = new Message(messageStr.getBytes(),messageProperties);
         headersRabbitTemplate.send(message);
     }
@@ -71,7 +70,7 @@ public class RabbitSendService {
         messageProperties.setHeader("key2","123");
         messageProperties.setHeader("key3","123");
         messageProperties.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN);
-        String messageStr = "headersSendMessage2 hello rabbitMQ "+i;
+        String messageStr = "headersSendMessage2 hello rabbit "+i;
         Message message = new Message(messageStr.getBytes(),messageProperties);
         headersRabbitTemplate.send(message);
     }
@@ -83,7 +82,7 @@ public class RabbitSendService {
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setHeader("key1","123");
         messageProperties.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN);
-        String messageStr = "headersSendMessage3 hello rabbitMQ "+i;
+        String messageStr = "headersSendMessage3 hello rabbit "+i;
         Message message = new Message(messageStr.getBytes(),messageProperties);
         headersRabbitTemplate.send(message);
     }
@@ -95,7 +94,7 @@ public class RabbitSendService {
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setHeader("key4","123");
         messageProperties.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN);
-        String messageStr = "headersSendMessage4 hello rabbitMQ "+i;
+        String messageStr = "headersSendMessage4 hello rabbit "+i;
         Message message = new Message(messageStr.getBytes(),messageProperties);
         headersRabbitTemplate.send(message);
     }
