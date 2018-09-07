@@ -1,8 +1,6 @@
 package com.my.rabbit.controller;
 
-import com.my.rabbit.service.DelayRabbitSendService;
-import com.my.rabbit.service.PriorityRabbitSendService;
-import com.my.rabbit.service.RabbitSendService;
+import com.my.rabbit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +18,10 @@ public class SendController {
     private PriorityRabbitSendService priorityRabbitSendService;
     @Autowired
     private DelayRabbitSendService delayRabbitSendService;
+    @Autowired
+    private Delay2RabbitSendService delay2RabbitSendService;
+    @Autowired
+    private ManualRabbitSendService manualRabbitSendService;
 
     @RequestMapping("sendFanout")
     public String sendFanout(@RequestParam("count") int count){
@@ -92,6 +94,30 @@ public class SendController {
     public String sendDelayQueue(@RequestParam("count") int count){
         for (int i=0;i<count;i++){
             delayRabbitSendService.send(i);
+            try {
+                Thread.sleep(100L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return "00000000";
+    }
+    @RequestMapping("sendDelay2Queue")
+    public String sendDelay2Queue(@RequestParam("count") int count){
+        for (int i=0;i<count;i++){
+            delay2RabbitSendService.send(i);
+            try {
+                Thread.sleep(100L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return "00000000";
+    }
+    @RequestMapping("sendManualQueue")
+    public String sendManualQueue(@RequestParam("count") int count){
+        for (int i=0;i<count;i++){
+            manualRabbitSendService.send(i);
             try {
                 Thread.sleep(100L);
             } catch (InterruptedException e) {

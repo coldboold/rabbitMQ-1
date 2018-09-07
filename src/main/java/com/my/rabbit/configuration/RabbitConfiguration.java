@@ -33,6 +33,8 @@ public class RabbitConfiguration {
         cachingConnectionFactory.setVirtualHost(rabbitProperties.getVirtualHost());
         //开启发送确认
         cachingConnectionFactory.setPublisherConfirms(true);
+        //开启返回确认
+        cachingConnectionFactory.setPublisherReturns(true);
         return cachingConnectionFactory;
     }
 
