@@ -2,19 +2,11 @@ package com.my.rabbit.configuration;
 
 import com.my.rabbit.callback.ManualConfirmCallBack;
 import com.my.rabbit.callback.ManualReturnCallBack;
-import com.my.rabbit.listener.ManualRabbitClientService;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.config.ListenerContainerFactoryBean;
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.support.MessagePropertiesConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -31,9 +23,9 @@ import org.springframework.context.annotation.Scope;
 @EnableConfigurationProperties(RabbitProperties.class)
 public class ManualQueueConfiguration {
 
-    private static final String QUEUE_DIRECT_B = "queue_direct_B";
-    private static final String DIRECT_EXCHANGE_B = "direct_exchange_B";
-    private static final String DIRECT_ROUTING_KEY_B = "direct.routing.keyB";
+    private static final String RISK_SCORE_CARD_IN_QUEUE = "risk_score_card_in";
+    private static final String RISK_EXCHANGE = "risk";
+    private static final String RISK_SCORE_CARD_IN_KEY = "risk.score.card.in";
 
 
     @Bean(name="manualRabbitTemplate")
@@ -46,23 +38,23 @@ public class ManualQueueConfiguration {
         rabbitTemplate.setMessageConverter(messageConverter);
         rabbitTemplate.setMessagePropertiesConverter(messagePropertiesConverter);
         rabbitTemplate.setReceiveTimeout(6000);
-        rabbitTemplate.setExchange(DIRECT_EXCHANGE_B);
-        rabbitTemplate.setRoutingKey(DIRECT_ROUTING_KEY_B);
+        rabbitTemplate.setExchange(RISK_EXCHANGE);
+        rabbitTemplate.setRoutingKey(RISK_SCORE_CARD_IN_KEY);
         rabbitTemplate.setConfirmCallback(new ManualConfirmCallBack());
         rabbitTemplate.setReturnCallback(new ManualReturnCallBack());
         return rabbitTemplate;
     }
     @Bean
     public Queue directA(){
-        return new Queue(QUEUE_DIRECT_B,true);
+        return new Queue(RISK_SCORE_CARD_IN_QUEUE,true);
     }
 
     @Bean
     public DirectExchange directExchange(){
-        return new DirectExchange(DIRECT_EXCHANGE_B,true,false);
+        return new DirectExchange(RISK_EXCHANGE,true,false);
     }
     @Bean
     public Binding buildBindingDirectA(){
-        return BindingBuilder.bind(directA()).to(directExchange()).with(DIRECT_ROUTING_KEY_B);
+        return BindingBuilder.bind(directA()).to(directExchange()).with(RISK_SCORE_CARD_IN_KEY);
     }
 }

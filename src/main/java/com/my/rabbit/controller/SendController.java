@@ -65,9 +65,9 @@ public class SendController {
     @RequestMapping("sendHeaders")
     public String sendHeaders(@RequestParam("count") int count){
         for (int i=0;i<count;i++){
-            rabbitService.headersSendMessage(i);
-            rabbitService.headersSendMessage2(i);
-            rabbitService.headersSendMessage3(i);
+//            rabbitService.headersSendMessage(i);
+//            rabbitService.headersSendMessage2(i);
+//            rabbitService.headersSendMessage3(i);
             rabbitService.headersSendMessage4(i);
             try {
                 Thread.sleep(100L);

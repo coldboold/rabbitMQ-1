@@ -55,6 +55,7 @@ public class RabbitSendService {
     public void headersSendMessage(int i){
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setHeader("headers.key","123");
+//        messageProperties.setHeader("headers.key","1234");
         messageProperties.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN);
         String messageStr = "headersMessage hello rabbit "+i;
         Message message = new Message(messageStr.getBytes(),messageProperties);

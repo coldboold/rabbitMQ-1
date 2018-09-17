@@ -1,5 +1,6 @@
 package com.my.rabbit.listener;
 
+import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -16,7 +17,7 @@ public class PriorityRabbitClientService {
 
 
     @RabbitListener(queues = {"priority_queue"})
-    public void receive(Message message){
+    public void receive(Message message, Channel channel){
         log.info("================priority_queue================:{}",new String(message.getBody()));
     }
 }
